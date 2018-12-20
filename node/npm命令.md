@@ -22,3 +22,6 @@ npm install express -g #全局安装
 1.将安装包放在/user/local下，或者你的node的安装目录(如：C:\Program Files\nodejs)下  
 2.可以通过require()来引入本地安装的包  
 
+
+#####关于 package.json  
+package.json 位于模块的目录下，用于定义包的属性
