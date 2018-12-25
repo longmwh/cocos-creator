@@ -4,7 +4,7 @@
 
 适配过程中遇到的最大的问题是一开始无法真机调试，  
 当时按照文档  [chrome浏览器真机调试](http://minigame.vivo.com.cn/documents/lesson/debug.html#chrome%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9C%9F%E6%9C%BA%E8%B0%83%E8%AF%95)  
-中写的一步一步到对过，可是还是连接不上，在电脑中的 chrome上面显示“Debugging connection was closed.Reason:websocket_closed Recconnect when ready by reopening DevTools.”  
+中写的一步一步都对过，可是还是连接不上，在电脑中的 chrome上面显示“Debugging connection was closed.Reason:websocket_closed Recconnect when ready by reopening DevTools.”  
 当时去问vivo的程序对接人员，就问我手机ip能不能ping通，然后给了我一个新的小游戏引擎安装包，可是还是不行，  
 
 后来换了 vivo小游戏引擎20181027版本的就可以了（之前用的是20181210更新的版本），也不知道为什么....  
@@ -20,4 +20,4 @@
 
     WebGLRenderingContext.getUniformLocation();返回uniform变量的指针位置
 
-导致后面矩阵计算错误
+导致后面矩阵计算错误，球的位置也就错了
