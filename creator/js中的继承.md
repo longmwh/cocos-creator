@@ -31,7 +31,8 @@
 在子构造函数中，通过调用父构造函数的call方法来实现继承，
 
 
-[call](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call)
+[call](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call)  
+
 ###call()方法调用一个函数，其具有一个指定的this值和 参数列表  
 
     function Product(name, price) {
