@@ -1,0 +1,30 @@
+["项目结构"](https://docs.cocos.com/creator/manual/zh/getting-started/project-structure.html?h=library)
+
+资源库（library）  
+library 是将 assets 中的资源导入后生成的，在这里文件的结构和资源的格式将被处理成最终游戏发布时需要的形式。__如果您使用版本控制系统管理您的项目__，这个文件夹是不需要进入版本控制的。
+
+当 library 丢失或损坏的时候，只要删除整个 library 文件夹再打开项目，就会重新生成资源库。  
+
+
+在cocos creator 编辑器界面中   
+资源管理器界面 -> 选中资源 -> 右键 -> 前往library中的资源位置  
+可以进入library中找到对应的资源位置，
+
+目前cocos creator2.0.9版本不支持直接使用cc.loader.loadRes进行加载二进制文件，  
+以".bin"为例,默认情况下，cocos creator将其识别为cc.Asset格式(["文档"](https://docs.cocos.com/creator/manual/zh/release-notes/raw-asset-migration.html#其余未知类型默认也全都导入为-ccasset))， 
+这样读取文件后不能获取到arraybuffer,  
+
+可以在library中修改对应的资源格式
+ "__type__": "cc.Asset",     改为    "__type__": "cc.BufferAsset",  
+ 这样使用cc.loader.loadRes加载后就能获取到对应的arraybuffer了  
+ 如：  
+            var url = "a";
+            var callback = function(){};
+            cc.loader.loadRes(url, function (err, res) {
+                if ((err) || (!(res._buffer instanceof ArrayBuffer)))
+                    callback(null);
+                else
+                    callback(res._buffer);
+            });
+            
+     这里的res  输出为 cc_BufferAsset {_name: "a", _objFlags: 0, _native: ".bin", loaded: true, _buffer: ArrayBuffer(144), …}
