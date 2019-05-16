@@ -1,0 +1,16 @@
+
+[cc.Class](https://docs.cocos.com/creator/api/zh/modules/cc.html#class)  
+
+extends Function The base class.  
+
+默认为 extends: cc.Component,  
+
+也可以  extends: FunctionName,//函数名  
+extends:require('FileName'),//FileName文件中也有一个 cc.Class  
+至于直接extends 2个第二个会被第一个覆盖掉  可能有什么特定的方法  
+
+要继承 Fun1  和Fun2  
+可以使用Fun3继承Fun2 
+cc.Class继承Fun1  然后在cc.Class 中new Fun3(),将cc.Class的引用传递过去，实现继承Fun2   
+
+直接继承多个，后面再想想....
