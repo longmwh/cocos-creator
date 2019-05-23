@@ -1,0 +1,137 @@
+
+
+创建sprite:
+    CreateSprite: function (str, res, bScale9) {
+        var spNode = new cc.Node();
+        // spNode.active = false;
+
+        var spFrame = spNode.addComponent(cc.Sprite);
+        spFrame.spriteFrame = res.getSpriteFrame(str);
+        spFrame.sizeMode = bScale9 ? cc.Sprite.SizeMode.CUSTOM : cc.Sprite.SizeMode.RAW;
+        if (bScale9) {
+            spFrame.type = cc.Sprite.Type.Sliced;
+        }
+        spFrame.trim = false;
+        return spNode;
+    },
+
+创建动画：
+    CreateAnimationClip: function (spRes, sample, wrapMode, animationName) {
+        var clip = cc.AnimationClip.createWithSpriteFrames(spRes, sample);
+        clip.speed = 1;
+        clip.name = animationName;
+        clip.wrapMode = wrapMode;
+        return clip;
+    },
+
+[使用脚本控制动画](https://docs.cocos.com/creator/manual/zh/animation/scripting-animation.html)
+
+获取 AnimationState
+
+var anim = this.getComponent(cc.Animation);
+// play 会返回关联的 AnimationState
+var animState = anim.play('test');
+
+// 或是直接获取
+var animState = anim.getAnimationState('test');
+
+获取动画信息
+var anim = this.getComponent(cc.Animation);
+var animState = anim.play('test');
+
+// 获取动画关联的clip
+var clip = animState.clip;
+
+// 获取动画的名字
+var name = animState.name;
+
+// 获取动画的播放速度
+var speed = animState.speed;
+
+// 获取动画的播放总时长
+var duration = animState.duration;
+
+// 获取动画的播放时间
+var time = animState.time;
+
+// 获取动画的重复次数
+var repeatCount = animState.repeatCount;
+
+// 获取动画的循环模式
+var wrapMode = animState.wrapMode
+
+// 获取动画是否正在播放
+var playing = animState.isPlaying;
+
+// 获取动画是否已经暂停
+var paused = animState.isPaused;
+
+// 获取动画的帧率
+var frameRate = animState.frameRate;
+从 AnimationState 中可以获取到所有动画的信息，你可以利用这些信息来判断需要做哪些事情。
+
+
+//添加按钮的点击事件
+[Button文档](https://docs.cocos.com/creator/manual/zh/components/button.html)
+
+                //给一个node添加按钮点击时间，传送的值为data
+                var addEvent = function (node, data) {
+                    var clickEventHandler = new cc.Component.EventHandler();
+                    clickEventHandler.target = this.node; //这个 node 节点是你的事件处理代码组件所属的节点
+                    clickEventHandler.component = "CpGameSceneJs";//这个是代码文件名
+                    clickEventHandler.handler = "MechanismCallBack";
+                    clickEventHandler.customEventData = data;
+
+                    var button = node.getComponent(cc.Button);
+                    button.clickEvents.push(clickEventHandler);
+                    return clickEventHandler;
+                }.bind(this);
+
+方法一
+ 
+这种方法添加的事件回调和使用编辑器添加的事件回调是一样的，都是通过代码添加。首先需要构造一个  cc.Component.EventHandler  对象，然后设置好对应的  target 、 component 、 handler  和  customEventData  参数。
+ //here is your component file, file name = MyComponent.js 
+cc.Class({
+    extends: cc.Component,
+    properties: {},
+
+    onLoad: function () {
+        var clickEventHandler = new cc.Component.EventHandler();
+        clickEventHandler.target = this.node; //这个 node 节点是你的事件处理代码组件所属的节点
+        clickEventHandler.component = "MyComponent";//这个是代码文件名
+        clickEventHandler.handler = "callback";
+        clickEventHandler.customEventData = "foobar";
+
+        var button = node.getComponent(cc.Button);
+        button.clickEvents.push(clickEventHandler);
+    },
+
+    callback: function (event, customEventData) {
+        //这里 event 是一个 Touch Event 对象，你可以通过 event.target 取到事件的发送节点
+        var node = event.target;
+        var button = node.getComponent(cc.Button);
+        //这里的 customEventData 参数就等于你之前设置的 "foobar"
+    }
+});
+ 
+方法二
+ 
+通过  button.node.on('click', ...)  的方式来添加，这是一种非常简便的方式，但是该方式有一定的局限性，在事件回调里面无法 获得当前点击按钮的屏幕坐标点。
+ //假设我们在一个组件的 onLoad 方法里面添加事件处理回调，在 callback 函数中进行事件处理:
+
+cc.Class({
+    extends: cc.Component,
+
+    properties: {
+       button: cc.Button
+    },
+
+    onLoad: function () {
+       this.button.node.on('click', this.callback, this);
+    },
+
+    callback: function (button) {
+       //do whatever you want with button
+       //另外，注意这种方式注册的事件，也无法传递 customEventData
+    }
+});
