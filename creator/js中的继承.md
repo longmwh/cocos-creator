@@ -1,3 +1,5 @@
+[对象模型的细节](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Details_of_the_Object_Model)
+
 ## JS 中的继承
 
     var A = function(){
